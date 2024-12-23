@@ -30,8 +30,8 @@ class FaceDetectionApp:
         # Buttons
         ttk.Button(self.main_frame, text="Capture from Camera", command=self.capture_from_camera).grid(row=0, column=0, padx=5, pady=5)
         ttk.Button(self.main_frame, text="Load Image", command=self.load_image).grid(row=0, column=1, padx=5, pady=5)
-        ttk.Button(self.main_frame, text="Load Multiple Images", command=self.load_multiple_images).grid(row=0, column=2, padx=5, pady=5)
-        ttk.Button(self.main_frame, text="Show History", command=self.show_history).grid(row=0, column=3, padx=5, pady=5)
+      #   ttk.Button(self.main_frame, text="Load Multiple Images", command=self.load_multiple_images).grid(row=0, column=2, padx=5, pady=5)
+      #   ttk.Button(self.main_frame, text="Show History", command=self.show_history).grid(row=0, column=3, padx=5, pady=5)
         
         # Create frame for multiple visualizations
         self.viz_frame = ttk.Frame(self.main_frame)
@@ -116,9 +116,9 @@ class FaceDetectionApp:
         except Exception as e:
             return str(e), False
 
-    def update_visualization(self, *args):
-        if hasattr(self, 'current_image'):
-            self.update_display(self.current_image_path, self.current_detection_result)
+   #  def update_visualization(self, *args):
+   #      if hasattr(self, 'current_image'):
+   #          self.update_display(self.current_image_path, self.current_detection_result)
 
     def update_display(self, image_path, detection_result):
         # Store current image info for visualization updates
@@ -208,84 +208,84 @@ class FaceDetectionApp:
             result = self.detect_face(file_path)
             self.update_display(file_path, result)
             
-    def load_multiple_images(self):
-        file_paths = filedialog.askopenfilenames(
-            filetypes=[("Image files", "*.jpg *.jpeg *.png *.bmp *.gif *.tiff")]
-        )
-        if file_paths:
-            for file_path in file_paths:
-                result = self.detect_face(file_path)
-                self.update_display(file_path, result)
+   #  def load_multiple_images(self):
+   #      file_paths = filedialog.askopenfilenames(
+   #          filetypes=[("Image files", "*.jpg *.jpeg *.png *.bmp *.gif *.tiff")]
+   #      )
+   #      if file_paths:
+   #          for file_path in file_paths:
+   #              result = self.detect_face(file_path)
+   #              self.update_display(file_path, result)
                 
-    def show_history(self):
-        history_window = tk.Toplevel(self.root)
-        history_window.title("Detection History")
+   #  def show_history(self):
+   #      history_window = tk.Toplevel(self.root)
+   #      history_window.title("Detection History")
         
-        # Create frame for history content
-        history_frame = ttk.Frame(history_window)
-        history_frame.pack(padx=10, pady=10, fill='both', expand=True)
+   #      # Create frame for history content
+   #      history_frame = ttk.Frame(history_window)
+   #      history_frame.pack(padx=10, pady=10, fill='both', expand=True)
         
-        # Create treeview for history
-        columns = ("Timestamp", "Image", "Result", "Confidence")
-        history_tree = ttk.Treeview(history_frame, columns=columns, show="headings")
-        for col in columns:
-            history_tree.heading(col, text=col)
-            history_tree.column(col, width=150)
+   #      # Create treeview for history
+   #      columns = ("Timestamp", "Image", "Result", "Confidence")
+   #      history_tree = ttk.Treeview(history_frame, columns=columns, show="headings")
+   #      for col in columns:
+   #          history_tree.heading(col, text=col)
+   #          history_tree.column(col, width=150)
         
-        # Create image preview label
-        preview_label = ttk.Label(history_frame)
-        preview_label.pack(side='right', padx=10)
+   #      # Create image preview label
+   #      preview_label = ttk.Label(history_frame)
+   #      preview_label.pack(side='right', padx=10)
         
-        def show_image(event):
-            selected_item = history_tree.selection()
-            if selected_item:
-                item = history_tree.item(selected_item[0])
-                for result in self.results_history:
-                    if os.path.basename(result.get('image_path', '')) == item['values'][1]:
-                        img = Image.open(result['image_path'])
-                        img.thumbnail((200, 200))  # Resize for preview
-                        img_tk = ImageTk.PhotoImage(img)
-                        preview_label.configure(image=img_tk)
-                        preview_label.image = img_tk
+   #      def show_image(event):
+   #          selected_item = history_tree.selection()
+   #          if selected_item:
+   #              item = history_tree.item(selected_item[0])
+   #              for result in self.results_history:
+   #                  if os.path.basename(result.get('image_path', '')) == item['values'][1]:
+   #                      img = Image.open(result['image_path'])
+   #                      img.thumbnail((200, 200))  # Resize for preview
+   #                      img_tk = ImageTk.PhotoImage(img)
+   #                      preview_label.configure(image=img_tk)
+   #                      preview_label.image = img_tk
         
-        history_tree.bind('<<TreeviewSelect>>', show_image)
+   #      history_tree.bind('<<TreeviewSelect>>', show_image)
         
-        # Add history items
-        for result in self.results_history:
-            if isinstance(result, dict):
-                history_tree.insert("", "end", values=(
-                    result.get('timestamp', 'N/A'),
-                    os.path.basename(result.get('image_path', 'N/A')),
-                    "DeepFake" if result['deepfake_analysis']['is_deepfake'] else "Authentic",
-                    f"{result['deepfake_analysis']['confidence']:.2%}"
-                ))
+   #      # Add history items
+   #      for result in self.results_history:
+   #          if isinstance(result, dict):
+   #              history_tree.insert("", "end", values=(
+   #                  result.get('timestamp', 'N/A'),
+   #                  os.path.basename(result.get('image_path', 'N/A')),
+   #                  "DeepFake" if result['deepfake_analysis']['is_deepfake'] else "Authentic",
+   #                  f"{result['deepfake_analysis']['confidence']:.2%}"
+   #              ))
         
-        history_tree.pack(side='left', fill='both', expand=True)
+   #      history_tree.pack(side='left', fill='both', expand=True)
 
-    def show_robustness_plot(self):
-        # Create a figure for the robustness plot
-        plt.figure(figsize=(10, 8))
+   #  def show_robustness_plot(self):
+   #      # Create a figure for the robustness plot
+   #      plt.figure(figsize=(10, 8))
         
-        # Sample data for demonstration (replace with actual data)
-        severity = [0, 1, 2, 3, 4, 5]
-        auc_values = {
-            'CViT': [60, 55, 50, 45, 40, 35],
-            'CrossViT': [65, 60, 55, 50, 45, 40],
-            'EViT': [50, 45, 40, 35, 30, 25],
-            'CAEL': [70, 65, 60, 55, 50, 45]
-        }
+   #      # Sample data for demonstration (replace with actual data)
+   #      severity = [0, 1, 2, 3, 4, 5]
+   #      auc_values = {
+   #          'CViT': [60, 55, 50, 45, 40, 35],
+   #          'CrossViT': [65, 60, 55, 50, 45, 40],
+   #          'EViT': [50, 45, 40, 35, 30, 25],
+   #          'CAEL': [70, 65, 60, 55, 50, 45]
+   #      }
         
-        # Plotting each method
-        for method, values in auc_values.items():
-            plt.plot(severity, values, marker='o', label=method)
+   #      # Plotting each method
+   #      for method, values in auc_values.items():
+   #          plt.plot(severity, values, marker='o', label=method)
 
-        plt.title('Robustness to Unseen Image Distortions')
-        plt.xlabel('Severity')
-        plt.ylabel('AUC (%)')
-        plt.xticks(severity)
-        plt.legend()
-        plt.grid()
-        plt.show()
+   #      plt.title('Robustness to Unseen Image Distortions')
+   #      plt.xlabel('Severity')
+   #      plt.ylabel('AUC (%)')
+   #      plt.xticks(severity)
+   #      plt.legend()
+   #      plt.grid()
+   #      plt.show()
 
 if __name__ == "__main__":
     root = tk.Tk()
