@@ -4,6 +4,10 @@
 
 `pip install torch torchvision matplotlib opencv-python scikit-image numpy scipy tqdm`
 
+or
+
+`pip install -r requirements.txt`
+
 `python app.py`
 
 Thesis Paper Link : https://ieeexplore.ieee.org/document/10681109

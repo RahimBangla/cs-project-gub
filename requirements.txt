@@ -1,0 +1,9 @@
+deepface
+opencv-python
+tkinter
+Pillow
+numpy
+matplotlib
+seaborn
+scipy
+scikit-image
